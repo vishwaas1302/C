@@ -1,6 +1,5 @@
 #include<stdio.h>
-#define MAXLINE 15
-
+#define MAXLINE 30
 
 int getcurrentline(char line[]) {
     int c;
@@ -9,24 +8,34 @@ int getcurrentline(char line[]) {
         if(line_length < MAXLINE - 1) {
             line[line_length] = c;
         }
+        else if(line_length == MAXLINE - 1) {
+                line[MAXLINE - 1] = '\0';
+                printf("%s",line);
+                putchar(c);
+        }
+        else { 
+            putchar(c);
+        }
         line_length++;
     }
     if(c == '\n') {
-        if(line_length >= MAXLINE-2) {
-            line[MAXLINE-2] = '\n';
+        if(line_length < MAXLINE - 1) {
+            line[line_length] = c;
+            line_length++;
         }
         else {
-            line[line_length] = c;
+            putchar('\n');
         }
-        line_length++;
     }
-    line[line_length] = '\0';
+    if(line_length < MAXLINE) {
+        line[line_length] = '\0';
+    }
     return line_length;
 }
 
 int copy_line(char line[],char longest_line[]) {
     int i = 0;
-    while( i<MAXLINE && ((longest_line[i] = line[i]) != EOF) ){
+    while((longest_line[i] = line[i]) != '\0') {
         i++;
     }
 }
