@@ -1,0 +1,46 @@
+#include<stdio.h>
+#define MAXLINE 15
+
+
+int getcurrentline(char line[]) {
+    int c;
+    int line_length = 0;
+    while(((c=getchar()) != EOF) && c != '\n') {
+        if(line_length < MAXLINE - 1) {
+            line[line_length] = c;
+        }
+        line_length++;
+    }
+    if(c == '\n') {
+        if(line_length >= MAXLINE-2) {
+            line[MAXLINE-2] = '\n';
+        }
+        else {
+            line[line_length] = c;
+        }
+        line_length++;
+    }
+    line[line_length] = '\0';
+    return line_length;
+}
+
+int copy_line(char line[],char longest_line[]) {
+    int i = 0;
+    while( i<MAXLINE && ((longest_line[i] = line[i]) != EOF) ){
+        i++;
+    }
+}
+
+int main() {
+    char line[MAXLINE],longest_line[MAXLINE];
+    unsigned int longest_line_length=0,current_line_length=0;
+    while((current_line_length = getcurrentline(line)) != 0) {
+        if(current_line_length > longest_line_length) {
+            longest_line_length = current_line_length;
+            copy_line(line,longest_line);
+        }
+    }
+
+    printf("\n Longest line is : %d\n\n %s",longest_line_length,longest_line);
+    return 0;
+}
